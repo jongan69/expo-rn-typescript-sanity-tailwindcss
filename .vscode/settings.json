@@ -2,21 +2,22 @@
 {
   "cSpell.words": [
     "Aagaard",
-    "Ionicons",
-    "SVGs",
-    "Xcode",
     "barcode",
     "bensound",
     "checkmark",
     "codeframe",
     "eqeqeq",
     "esnext",
+    "Ionicons",
     "readonly",
+    "SVGs",
+    "tailwindcss",
     "thejazzpiano",
     "tslib",
     "unimodules",
     "unmount",
-    "wtfs"
+    "wtfs",
+    "Xcode"
   ],
   "editor.codeActionsOnSave": {
     "source.organizeImports": true
@@ -30,5 +31,6 @@
     "typescriptreact"
   ],
   "javascript.validate.enable": false,
-  "typescript.tsdk": "node_modules/typescript/lib"
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "git.ignoreLimitWarning": true
 }

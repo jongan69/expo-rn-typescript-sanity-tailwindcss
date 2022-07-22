@@ -8,9 +8,9 @@
     "lib": ["ESNext"],
     "noEmitHelpers": true,
     "noFallthroughCasesInSwitch": true,
-    "noImplicitReturns": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
+    // "noImplicitReturns": true,
+    // "noUnusedLocals": true,
+    // "noUnusedParameters": true,
     "strict": true
   }
 }
