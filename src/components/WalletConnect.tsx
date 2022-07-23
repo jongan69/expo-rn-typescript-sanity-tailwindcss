@@ -4,6 +4,7 @@ import { useWalletConnect } from "@walletconnect/react-native-dapp";
 import * as React from "react";
 import { Text, TouchableOpacity } from "react-native";
 import tw from 'twrnc';
+import getAllNfts from '../lib/getAllNfts';
 
 
 const shortenAddress = (address: string) => {
@@ -30,6 +31,14 @@ export default function WalletConnectButton() {
   const connectWallet = React.useCallback(() => {
     return connector.connect();
   }, [connector]);
+
+
+  React.useEffect(() => {
+    if (connector.connected) {
+      getAllNfts(connector.accounts[0])
+    }
+  }, [connector])
+
 
   const killSession = React.useCallback(() => {
     navigation.navigate('Welcome')

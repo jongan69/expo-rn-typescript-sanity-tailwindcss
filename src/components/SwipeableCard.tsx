@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import TinderCard from 'react-tinder-card'
 import styled from 'styled-components'
+import { Text } from './Themed'
 
 const Container = styled.View`
     display: flex;
@@ -55,55 +56,59 @@ const InfoText = styled.Text`
     z-index: -100;
 `
 
-const db = [
-  {
-    name: 'Richard Hendricks',
-    img: require('../../assets/demoImages/richard.jpeg')
-  },
-  {
-    name: 'Erlich Bachman',
-    img: require('../../assets/demoImages/erlich.jpeg')
-  },
-  {
-    name: 'Monica Hall',
-    img: require('../../assets/demoImages/monica.jpeg')
-  },
-  {
-    name: 'Jared Dunn',
-    img: require('../../assets/demoImages/jared.jpeg')
-  },
-  {
-    name: 'Dinesh Chugtai',
-    img: require('../../assets/demoImages/dinesh.jpeg')
-  }
-]
+// const db = [
+//   {
+//     name: 'Richard Hendricks',
+//     img: require('../../assets/demoImages/richard.jpeg')
+//   },
+//   {
+//     name: 'Erlich Bachman',
+//     img: require('../../assets/demoImages/erlich.jpeg')
+//   },
+//   {
+//     name: 'Monica Hall',
+//     img: require('../../assets/demoImages/monica.jpeg')
+//   },
+//   {
+//     name: 'Jared Dunn',
+//     img: require('../../assets/demoImages/jared.jpeg')
+//   },
+//   {
+//     name: 'Dinesh Chugtai',
+//     img: require('../../assets/demoImages/dinesh.jpeg')
+//   }
+// ]
 
-function SwipeableCard() {
-  const characters = db
+const SwipeableCard = (users: any[]) => {
+  console.log('Users in Swipe card: ', users)
   const [lastDirection, setLastDirection] = useState()
 
-  const swiped = (direction, nameToDelete) => {
-    console.log('removing: ' + nameToDelete)
+  const swiped = (direction: string | React.SetStateAction<undefined>, nameToDelete: any) => {
+    console.log(`removing: ${nameToDelete}`)
     setLastDirection(direction)
   }
 
-  const outOfFrame = (name) => {
-    console.log(name + ' left the screen!')
+  const outOfFrame = (name: any) => {
+    console.log(`${name} left the screen!`)
   }
 
   return (
     <Container>
-      <Header>React Native Tinder Card</Header>
+      <Header>Match with Web3 friends!</Header>
+      {users.length && <Text>User Data: {users.toString()}</Text>}
       <CardContainer>
-        {characters.map((character) =>
-          <TinderCard key={character.name} onSwipe={(dir) => swiped(dir, character.name)} onCardLeftScreen={() => outOfFrame(character.name)}>
-            <Card>
-              <CardImage source={character.img}>
-                <CardTitle>{character.name}</CardTitle>
-              </CardImage>
-            </Card>
-          </TinderCard>
-        )}
+        {users.length > 1 &&
+          <>
+            {users.map((person: { name: React.Key | null | undefined; image: any }) =>
+              <TinderCard key={person.name} onSwipe={(dir) => swiped(dir, character.name)} onCardLeftScreen={() => outOfFrame(character.name)}>
+                <Card>
+                  <CardImage source={person.image}>
+                    <CardTitle>{person.name}</CardTitle>
+                  </CardImage>
+                </Card>
+              </TinderCard>
+            )}
+          </>}
       </CardContainer>
       {lastDirection ? <InfoText>You swiped {lastDirection}</InfoText> : <InfoText />}
     </Container>
