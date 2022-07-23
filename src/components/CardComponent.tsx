@@ -1,17 +1,16 @@
 import React from "react";
-import { Image } from "react-native";
+import { Image, Text, View } from "react-native";
 import { Card } from "react-native-paper";
-import { Text, View } from './Themed';
+import tw from 'twrnc';
 
-export const NFTCard = ({ imageUrl, title }) => {
+export const NFTCard = (imageUrl: string, title: string) => {
   return (
     <Card>
       <View>
         <Image
+          style={tw`rounded contain`}
           key="NFT"
-          source={{
-            uri: imageUrl
-          }}
+          source={{ uri: imageUrl }}
         />
       </View>
       <Text>{title}</Text>

@@ -1,5 +1,5 @@
 import { ALCHEMY_API_KEY } from '@env';
-
+import createNftsOnSanity from './createNfts';
 
 const getAllNfts = async (walletAddress) => {
 
@@ -29,7 +29,8 @@ const getAllNfts = async (walletAddress) => {
             }
           })
 
-          // Check if ENS Domain NFT found
+          // To do: Check if an ENS Domain NFT was found
+          // if Contract address = 0x57f1887a8BF19b14fC0dF6Fd9B2acc9Af147eA85 return true
 
           ownedNFTs.push({
             "name": item.metadata.name, // string of name
@@ -41,12 +42,17 @@ const getAllNfts = async (walletAddress) => {
         }
       })
 
+      // ownedNFTs.forEach((item, index) => {
+      //   if (item.urls.length > 0) {
+      //     item.urls.forEach((url) => {
+      //       console.log(`NFT #${index} has URL ${url}`)
+      //     })
+      //   }
+      // })
+
       ownedNFTs.forEach((item, index) => {
-        if (item.urls.length > 0) {
-          item.urls.forEach((url) => {
-            console.log(`NFT #${index} has URL ${url}`)
-          })
-        }
+        createNftsOnSanity(walletAddress, item);
+        console.log(`NFT #${index} is being posted ${item.name}`)
       })
 
       return ownedNFTs

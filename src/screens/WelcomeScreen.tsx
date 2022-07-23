@@ -63,15 +63,15 @@ export const WelcomeScreen = () => {
           </>
           :
           <>
-            <View style={[tw`items-center rounded`, { padding: 20 }]}>
+            <View style={[tw`items-center rounded`, { padding: 10 }]}>
               <Text >Welcome</Text>
               <Text>{connector.accounts[0]}</Text>
             </View>
             <TouchableOpacity
               onPress={() => navigation.navigate("Root")}
-              style={[tw`px-8 py-8 bg-cyan-700 rounded mt-10`]}
+              style={[tw`rounded mt-10 p-5 bg-neutral-700`]}
             >
-              <Text>Press to continue</Text>
+              <Text style={[tw`font-bold text-lg text-slate-100`]}>Press to continue</Text>
             </TouchableOpacity>
             <WalletConnectButton />
           </>

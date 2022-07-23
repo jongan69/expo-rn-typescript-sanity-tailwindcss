@@ -1,20 +1,32 @@
-import React, { useState, useEffect } from "react";
-import { Alert, Text, View } from "react-native";
+import { useWalletConnect } from "@walletconnect/react-native-dapp";
+import React, { useEffect, useState } from "react";
+import { Image, Text, View } from "react-native";
+// import CardComponent from '../components/CardComponent';
 import { client } from "../lib/client";
 
-
 export const OwnedNFTsScreen = () => {
+  const connector = useWalletConnect();
+  const ownedNFTs: Array<[]> = []
   // const navigate = Props.navigation.navigate
+
   const getData: () => Promise<void> = async () => {
     try {
-      const query = '*[_type == "products"]';
+      const query = '*[_type == "nfts"]';
       const data = await client.fetch(query);
       console.log(data)
       if (data) {
-        setProducts(data);
-        Alert.alert('getData ran', products.toString());
+        data.forEach((element: Record<string, unknown>) => {
+          if (connector.accounts[0] === element.owner) {
+            // console.log('Found your NFT: ', element.urls[0])
+            const url = element?.urls[0]
+            ownedNFTs.push(url)
+          }
+        });
+        console.log('Found your NFTs: ', ownedNFTs)
+        setNfs(ownedNFTs);
+        // Alert.alert('Found your NFTs!', ownedNfs.toString());
       } else {
-        setProducts([])
+        setNfs([])
       }
     } catch (error) {
       console.log(error);
@@ -22,14 +34,33 @@ export const OwnedNFTsScreen = () => {
   };
 
 
-  const [products, setProducts] = useState([]);
+  const [nfts, setNfs] = useState([]);
+
   useEffect(() => {
     getData();
   }, []);
 
   return (
     <View>
-      <Text> Owned NFTs </Text>
+      <Text style={{ padding: 100 }}> Owned NFTs</Text>
+      {nfts &&
+        <View>
+          {nfts.map((item, index) => {
+            return (
+              <Image key={index} source={{ uri: item }} />
+            )
+          })}
+        </View>
+        // <View>
+        //   {nfts.map((item, index) => {
+        //     <TouchableOpacity key={index}>
+        //       <Text key={index}>{item.url}</Text>
+        //       <Image key={index} source={{ uri: nfts[index].url }} style={{ width: 30, height: 30 }} />
+        //       {/* <CardComponent key={index} imageUrl={item?.url.toString()} title={item?.name} /> */}
+        //     </TouchableOpacity>
+        //   })}
+        // </View>
+      }
     </View>
   );
 }

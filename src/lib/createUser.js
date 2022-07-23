@@ -1,19 +1,22 @@
 import { client } from './client'
 
-const createUserOnSanity = async (req, res) => {
+const createUserOnSanity = async (walletAddress) => {
   try {
     const userDoc = {
       _type: 'users',
-      _id: req.body.userWalletAddress,
-      name: req.body.name,
-      walletAddress: req.body.userWalletAddress,
+      _id: walletAddress,
+      name: walletAddress,
+      walletAddress: walletAddress,
     }
 
     await client.createIfNotExists(userDoc)
 
-    res.status(200).send({ message: 'success' })
+    console.log('Successfully Posted User to Sanity!')
+
+    // res.status(200).send({ message: 'success' })
   } catch (error) {
-    res.status(500).send({ message: 'error', data: error.message })
+    console.log('error', error)
+    // res.status(500).send({ message: 'error', data: error.message })
   }
 }
 

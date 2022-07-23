@@ -7,7 +7,7 @@ import SwipeableCard from "./SwipeableCard";
 export const Home = () => {
   const getData: () => Promise<void> = async () => {
     try {
-      const query = '*[_type == "users"]';
+      const query = '*[_type =="users"]';
       const data = await client.fetch(query);
       console.log(data)
       if (data) {
