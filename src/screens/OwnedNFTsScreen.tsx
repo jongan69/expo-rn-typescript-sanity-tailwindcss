@@ -9,7 +9,7 @@ export const OwnedNFTsScreen = () => {
   const ownedNFTs: Array<[]> = []
   // const navigate = Props.navigation.navigate
 
-  const getData: () => Promise<void> = async () => {
+  const getOwnedNfts: () => Promise<void> = async () => {
     try {
       const query = '*[_type == "nfts"]';
       const data = await client.fetch(query);
@@ -37,7 +37,7 @@ export const OwnedNFTsScreen = () => {
   const [nfts, setNfs] = useState([]);
 
   useEffect(() => {
-    getData();
+    getOwnedNfts();
   }, []);
 
   return (

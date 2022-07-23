@@ -1,5 +1,5 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { StackNavigationProp } from "@react-navigation/stack";
+// import { StackNavigationProp } from "@react-navigation/stack";
 import { Ionicons } from 'expo-vector-icons';
 import React from "react";
 import Home from '../components/Home';
@@ -9,15 +9,15 @@ import ProfileScreen from './ProfileScreen';
 // import { urlFor } from '../src/lib/client.js'
 
 
-type HomeStackParametersList = {
-  client: undefined;
-  data: undefined;
-  products: [];
-};
+// type HomeStackParametersList = {
+//   client: undefined;
+//   data: undefined;
+//   products: [];
+// };
 
-interface Props {
-  navigation: StackNavigationProp<HomeStackParametersList>;
-}
+// interface Props {
+//   navigation: StackNavigationProp<HomeStackParametersList>;
+// }
 
 const Tab = createBottomTabNavigator();
 

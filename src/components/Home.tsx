@@ -5,7 +5,7 @@ import { client } from "../lib/client";
 import SwipeableCard from "./SwipeableCard";
 
 export const Home = () => {
-  const getData: () => Promise<void> = async () => {
+  const getUsers: () => Promise<void> = async () => {
     try {
       const query = '*[_type =="users"]';
       const data = await client.fetch(query);
@@ -24,7 +24,7 @@ export const Home = () => {
 
   const [users, setUsers] = useState([]);
   useEffect(() => {
-    getData();
+    getUsers();
   }, []);
   return (
     <>

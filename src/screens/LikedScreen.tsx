@@ -5,16 +5,17 @@ import { client } from "../lib/client";
 
 export const LikedScreen = () => {
   // const navigate = Props.navigation.navigate
-  const getData: () => Promise<void> = async () => {
+  const getLikes: () => Promise<void> = async () => {
     try {
-      const query = '*[_type == "products"]';
+      const query = '*[_type == "users"]';
       const data = await client.fetch(query);
+
       console.log(data)
       if (data) {
-        setProducts(data);
-        Alert.alert('getData ran', products.toString());
+        setLikes(data);
+        Alert.alert('getLikes ran', likes.toString());
       } else {
-        setProducts([])
+        setLikes([])
       }
     } catch (error) {
       console.log(error);
@@ -22,9 +23,9 @@ export const LikedScreen = () => {
   };
 
 
-  const [products, setProducts] = useState([]);
+  const [likes, setLikes] = useState([]);
   useEffect(() => {
-    getData();
+    getLikes();
   }, []);
 
   return (

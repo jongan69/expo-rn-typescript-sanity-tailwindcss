@@ -11,10 +11,10 @@ export const MessageScreen = () => {
       const data = await client.fetch(query);
       console.log(data)
       if (data) {
-        setProducts(data);
-        Alert.alert('getData ran', products.toString());
+        setMessages(data);
+        Alert.alert('getMessages ran', messages.toString());
       } else {
-        setProducts([])
+        setMessages([])
       }
     } catch (error) {
       console.log(error);
@@ -22,7 +22,7 @@ export const MessageScreen = () => {
   };
 
 
-  const [products, setProducts] = useState([]);
+  const [messages, setMessages] = useState([]);
   useEffect(() => {
     getData();
   }, []);
