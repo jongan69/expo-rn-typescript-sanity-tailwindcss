@@ -5,6 +5,7 @@ import React from "react";
 import Home from '../components/Home';
 import LikedScreen from './LikedScreen';
 import OwnedNFTsScreen from './OwnedNFTsScreen';
+import ProfileScreen from './ProfileScreen';
 // import { urlFor } from '../src/lib/client.js'
 
 
@@ -36,8 +37,12 @@ export const RootScreen = () => {
             iconName = "md-heart";
           }
 
-          else if (route.name === "Owned") {
-            iconName = "md-heart";
+          else if (route.name === "My NFTs") {
+            iconName = "md-briefcase";
+          }
+
+          else if (route.name === "Profile") {
+            iconName = "md-person";
           }
 
           return <Ionicons name={iconName} size={size} color={color} />
@@ -55,8 +60,13 @@ export const RootScreen = () => {
         options={{ headerShown: false }}
       />
       <Tab.Screen
-        name="Owned"
+        name="My NFTs"
         component={OwnedNFTsScreen}
+        options={{ headerShown: false }}
+      />
+      <Tab.Screen
+        name="Profile"
+        component={ProfileScreen}
         options={{ headerShown: false }}
       />
     </Tab.Navigator>
