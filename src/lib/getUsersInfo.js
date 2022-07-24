@@ -6,6 +6,7 @@ const getUsersInfo = async (walletAddress) => {
       *[_type == "users" && _id == "${walletAddress}"]{
           name,
           walletAddress,
+          userBio,
           "imageUrl": profileImage.asset->url
         }
     `

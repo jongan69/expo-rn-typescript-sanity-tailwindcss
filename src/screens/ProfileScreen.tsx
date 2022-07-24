@@ -1,13 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext } from "react";
+import { Controller, useForm } from "react-hook-form";
+import { Button, Image, Text, TextInput } from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
 import styled from 'styled-components';
 import tw from 'twrnc';
-import { client } from "../lib/client";
+import { AppContext } from "../context/AppContext";
 
 const Container = styled.View`
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 100%;
+    height: 100%;
 `
 
 const Header = styled.Text`
@@ -17,11 +20,10 @@ const Header = styled.Text`
     margin-top: 20%
 `
 
-const CardContainer = styled.View`
-    width: 90%;
-    max-width: 260px;
-    height: 300px;
-    padding: 1%
+const FormContainer = styled.View`
+    padding: 8px
+    justify-content: center;
+    align-items: center;
 `
 
 // const CardImage = styled.ImageBackground`
@@ -31,14 +33,44 @@ const CardContainer = styled.View`
 //     border-radius: 20px;
 // `
 
-const CardTitle = styled.Text`
-    position: absolute;
-    bottom: 0;
-    margin: 10px;
-    color: #fff;
-`
+// const FormTitle = styled.Text`
+//     position: absolute;
+//     bottom: 0;
+//     margin: 10px;
+//     color: #fff;
+// `
+
+// type FormData = {
+//   Biography: string;
+//   Name: string;
+//   ProfileImage: undefined
+// };
+
+
 
 export const ProfileScreen = () => {
+  const { currentUserData } = useContext(AppContext)
+
+  const { control, handleSubmit, formState: { errors } } = useForm({
+    defaultValues: {
+      ProfileImage: currentUserData[0].imageUrl,
+      Name: currentUserData[0].name,
+      Biography: currentUserData[0].userBio,
+    }
+  });
+
+  const onSubmit = (data) => {
+    console.log(data);
+  }
+
+  const onChange = (arg) => {
+    return {
+      value: arg.nativeEvent.text,
+    };
+  };
+
+  console.log('errors', errors, 'Data from provider: ', currentUserData);
+
   // const getProfile: () => Promise<void> = async () => {
   //   try {
   //     const query = '*[_type == "users"]';
@@ -62,9 +94,55 @@ export const ProfileScreen = () => {
   // }, []);
 
   return (
-    <Container style={[tw`bg-black`]}>
-      <Header> Profile Screen </Header>
-    </Container>
+    <Container style={[tw`bg-white`]} >
+      <Header style={[tw`bg-black`]}> Profile Screen </Header>
+      <ScrollView>
+        <FormContainer>
+          {currentUserData[0].imageUrl &&
+            <Image
+              style={{ height: 100, width: 100, borderRadius: 20 }}
+              source={{ uri: currentUserData[0]?.imageUrl }} />
+          }
+          <Text style={[tw`p-5`]}> Your Displayed Name </Text>
+          <Controller
+            control={control}
+            rules={{
+              required: true,
+            }}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <TextInput
+                style={[tw`bg-white`, { width: '80%' }]}
+                onBlur={onBlur}
+                onChangeText={onChange}
+                value={value}
+              // placeholder={currentUserData.name}
+              />
+            )}
+            name={"Name"}
+          />
+          {errors.Name && <Text>This is required.</Text>}
+
+          <Text style={[tw`p-5`]}> Your Biography</Text>
+          <Controller
+            control={control}
+            rules={{
+              maxLength: 500,
+            }}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <TextInput
+                // style={styles.input}
+                onBlur={onBlur}
+                onChangeText={onChange}
+                value={value}
+                placeholder="Biography"
+              />
+            )}
+            name="Biography"
+          />
+        </FormContainer>
+        <Button title="Submit" onPress={handleSubmit(onSubmit)} />
+      </ScrollView>
+    </Container >
   );
 }
 

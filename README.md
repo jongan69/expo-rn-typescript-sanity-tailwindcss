@@ -2,6 +2,11 @@
 
 This is a [React Native](https://facebook.github.io/react-native/) Web3 app using the [Expo framework](https://expo.io) and written in [TypeScript](http://www.typescriptlang.org). It uses the [managed workflow](https://docs.expo.io/introduction/managed-vs-bare/) and uses [Tailwind](https://github.com/jaredh159/tailwind-react-native-classnames) for some styling and utilizes sanity.io for backend.
 
+## Warning
+
+THIS APP NEEDS react-native-svg@9.6.4 due to @walletconnect/react-native-dapp and expo-svg-uri needing to cooperate, please check in Node_Modules folder for versioning if:
+ `Invariant Violation: Tried to register two views with the same name RNSVGSvgView`
+
 ## Goals
 
 - Create a React Native Template using Typescript

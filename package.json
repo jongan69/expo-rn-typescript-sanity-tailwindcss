@@ -47,6 +47,7 @@
     "postcss": "^8.4.14",
     "process": "^0.11.10",
     "react": "17.0.2",
+    "react-hook-form": "^7.33.1",
     "react-native": "0.68.2",
     "react-native-dotenv": "^3.3.1",
     "react-native-gesture-handler": "~2.2.1",
