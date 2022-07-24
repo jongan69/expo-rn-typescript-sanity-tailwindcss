@@ -7,7 +7,6 @@ const createNftsOnSanity = async (walletAddress, nft) => {
       _type: 'nfts',
       // _id: nft.name.toString(),
       _id: `${nft.tokenId}_${nft.tokenBalance}`,
-
       // name: 'NFTS',
       // nft: nft.urls[0],
       nftName: nft.name,

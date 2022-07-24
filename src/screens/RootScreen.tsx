@@ -4,6 +4,7 @@ import { Ionicons } from 'expo-vector-icons';
 import React from "react";
 import Home from '../components/Home';
 import LikedScreen from './LikedScreen';
+import MessageScreen from './MessagesScreen';
 import OwnedNFTsScreen from './OwnedNFTsScreen';
 import ProfileScreen from './ProfileScreen';
 // import { urlFor } from '../src/lib/client.js'
@@ -45,6 +46,10 @@ export const RootScreen = () => {
             iconName = "md-person";
           }
 
+          else if (route.name === "Messages") {
+            iconName = "md-mail";
+          }
+
           return <Ionicons name={iconName} size={size} color={color} />
         }
       })}
@@ -67,6 +72,11 @@ export const RootScreen = () => {
       <Tab.Screen
         name="Profile"
         component={ProfileScreen}
+        options={{ headerShown: false }}
+      />
+      <Tab.Screen
+        name="Messages"
+        component={MessageScreen}
         options={{ headerShown: false }}
       />
     </Tab.Navigator>

@@ -1,7 +1,10 @@
-import React, { useState } from 'react'
-import TinderCard from 'react-tinder-card'
-import styled from 'styled-components'
-import { Text } from './Themed'
+/* eslint-disable no-unused-expressions */
+import SvgUri from "expo-svg-uri";
+import React, { useState } from 'react';
+import styled from 'styled-components';
+import tw from 'twrnc';
+import TinCard from './TinCard';
+
 
 const Container = styled.View`
     display: flex;
@@ -14,6 +17,7 @@ const Header = styled.Text`
     color: #000;
     font-size: 30px;
     margin-bottom: 30px;
+    width: 100%
 `
 
 const CardContainer = styled.View`
@@ -56,7 +60,7 @@ const InfoText = styled.Text`
     z-index: -100;
 `
 
-// const db = [
+// const users = [
 //   {
 //     name: 'Richard Hendricks',
 //     img: require('../../assets/demoImages/richard.jpeg')
@@ -79,37 +83,52 @@ const InfoText = styled.Text`
 //   }
 // ]
 
-const SwipeableCard = (users: any[]) => {
+const SwipeableCard = (props: { data: []; }) => {
+  const users = props.data
   console.log('Users in Swipe card: ', users)
   const [lastDirection, setLastDirection] = useState()
 
-  const swiped = (direction: string | React.SetStateAction<undefined>, nameToDelete: any) => {
+  const swiped = (direction: undefined, nameToDelete: string) => {
     console.log(`removing: ${nameToDelete}`)
     setLastDirection(direction)
   }
 
-  const outOfFrame = (name: any) => {
+  const outOfFrame = (name: string) => {
     console.log(`${name} left the screen!`)
   }
 
   return (
     <Container>
-      <Header>Match with Web3 friends!</Header>
-      {users.length && <Text>User Data: {users.toString()}</Text>}
-      <CardContainer>
-        {users.length > 1 &&
-          <>
-            {users.map((person: { name: React.Key | null | undefined; image: any }) =>
-              <TinderCard key={person.name} onSwipe={(dir) => swiped(dir, character.name)} onCardLeftScreen={() => outOfFrame(character.name)}>
+      <Header style={tw`text-white`}>
+        Match with Web3 friends!
+      </Header>
+      {users !== undefined &&
+        <CardContainer>
+          {users.map((person) => {
+            person.profileImage
+              ?
+              <TinCard key={person._id} onSwipe={(dir) => swiped(dir, person.name)} onCardLeftScreen={() => outOfFrame(person.name)}>
                 <Card>
-                  <CardImage source={person.image}>
+                  <CardImage source={person.profileImage}>
                     <CardTitle>{person.name}</CardTitle>
                   </CardImage>
                 </Card>
-              </TinderCard>
-            )}
-          </>}
-      </CardContainer>
+              </TinCard>
+              :
+              <TinCard key={person._id} onSwipe={(dir: string) => swiped(dir, person.name)} onCardLeftScreen={() => outOfFrame(person.name)}>
+                <Card>
+                  <SvgUri
+                    width="100"
+                    height="100"
+                    source={{ uri: person.defaultProfileImage }}
+                  />
+                  <CardTitle>{person.name}</CardTitle>
+                </Card>
+              </TinCard>
+          })}
+        </CardContainer>
+
+      }
       {lastDirection ? <InfoText>You swiped {lastDirection}</InfoText> : <InfoText />}
     </Container>
   )

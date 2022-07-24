@@ -1,9 +1,9 @@
 import { client } from './client'
 
-const getCurrentUserInfo = async (req, res) => {
+const getCurrentUserInfo = async (walletAddress) => {
   try {
     const query = `
-      *[_type == "users" && _id == "${req.query.activeAccount}"]{
+      *[_type == "users" && _id == "${walletAddress}"]{
           name,
           walletAddress,
           "imageUrl": profileImage.asset->url

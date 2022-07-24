@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Alert, ScrollView, Text } from "react-native";
+import { Alert, Text, View } from "react-native";
 import tw from 'twrnc';
 import { client } from "../lib/client";
 import SwipeableCard from "./SwipeableCard";
@@ -9,7 +9,7 @@ export const Home = () => {
     try {
       const query = '*[_type =="users"]';
       const data = await client.fetch(query);
-      console.log(data)
+      // console.log(data)
       if (data) {
         setUsers(data);
         Alert.alert('Found Users!', users.toString());
@@ -28,10 +28,10 @@ export const Home = () => {
   }, []);
   return (
     <>
-      <ScrollView style={[tw`flex`, { padding: '20%' }]}>
-        {users && users !== [] && <SwipeableCard users={users} />}
+      <View style={[tw`flex bg-fuchsia-700`, { padding: '20%', height: '100%' }]}>
+        {users && <SwipeableCard data={users} />}
         {!users && <Text> We didn't find any users! </Text>}
-      </ScrollView >
+      </View >
     </>
   )
 }
