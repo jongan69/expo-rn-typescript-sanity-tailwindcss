@@ -5,10 +5,7 @@ const createNftsOnSanity = async (walletAddress, nft) => {
     console.log('Posting NFT to Sanity: ', nft.name)
     const nftDoc = {
       _type: 'nfts',
-      // _id: nft.name.toString(),
       _id: `${nft.tokenId}_${nft.tokenBalance}`,
-      // name: 'NFTS',
-      // nft: nft.urls[0],
       nftName: nft.name,
       nftContractAddress: nft.contractAddress,
       nftTokenId: nft.tokenId,

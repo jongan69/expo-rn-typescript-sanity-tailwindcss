@@ -12,7 +12,8 @@ const getCurrentUserInfo = async (walletAddress) => {
 
     const sanityResponse = await client.fetch(query)
 
-    console.log('Sanity User Checked')
+    console.log('Fetching Current User from Sanity')
+    return sanityResponse
   } catch (error) {
     console.log('error', error)
   }

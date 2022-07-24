@@ -7,20 +7,17 @@ const checkMatches = async (req, res) => {
          likes
         }
     `
-
     const sanityResponse = await client.fetch(query)
-
     let isMatch = false
-
     sanityResponse[0].likes.forEach(likedUser => {
       if (likedUser._ref === req.body.currentUser) {
         isMatch = true
       }
     })
 
-    res.status(200).send({ message: 'success', data: { isMatch: isMatch } })
+    console.log('Checking Matches in Sanity')
   } catch (error) {
-    res.status(500).send({ message: 'error', data: error.message })
+    console.log('error', error)
   }
 }
 

@@ -35,8 +35,6 @@ export default function WalletConnectButton() {
   React.useEffect(() => {
     if (connector.connected && connector.accounts[0]) {
       setCurrentUserWallet(connector.accounts[0])
-      // createUserOnSanity(connector.accounts[0]);
-      // getAllNfts(connector.accounts[0]);
     }
   }, [connector])
 

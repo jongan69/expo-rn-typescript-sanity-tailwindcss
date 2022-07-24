@@ -1,5 +1,6 @@
 import React, { createContext, ReactElement, useEffect, useState } from "react";
 import createUserOnSanity from '../lib/createUser';
+import fetchCurrentUserData from '../lib/fetchCurrentUserData';
 import getAllNfts from '../lib/getAllNfts';
 import getUsersInfo from "../lib/getUsersInfo";
 
@@ -9,33 +10,26 @@ export const AppProvider = (props: { children: ReactElement }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentUserWallet, setCurrentUserWallet] = useState<string>();
   const [cardsData, setCardsData] = useState([]);
-  const [currentUserData, setCurrentUserData] = useState();
-  const [isUserInDb, setIsUserInDb] = useState(true);
-
+  const [currentUserData, setCurrentUserData] = useState([]);
 
   useEffect(() => {
-    console.log('The Current User Wallet was updated!')
-    console.log('Current User Wallet: ', currentUserWallet)
+    console.log('The Current User Wallet was updated!: ', currentUserWallet)
+    setIsLoggedIn(true);
     checkUserInsanity(currentUserWallet);
-    // return () => {
-    //   second
-    // }
   }, [currentUserWallet])
 
 
   // Check if the user is in our database, if not add them and add their Nfts
   const checkUserInsanity = async (currentUserWallet: string | undefined) => {
-    const checkuser = await getUsersInfo(currentUserWallet);
-    console.log('Checked user in sanity: ', checkuser);
-    if (checkuser.length > 0) {
-      setIsLoggedIn(true)
-      setIsUserInDb(true);
+    const checkuser = await fetchCurrentUserData(currentUserWallet);
+    if (checkuser) {
+      console.log('found user in sanity: ', checkuser);
       // Fetch all User Data
-      const userDataResponse = await getUsersInfo(currentUserWallet);
-      console.log('Current user data in sanity: ', userDataResponse);
-      setCurrentUserData(userDataResponse);
+      const currentUserDataResponse = await fetchCurrentUserData(currentUserWallet);
+      setCurrentUserData(currentUserDataResponse);
+      await getCardData(currentUserWallet);
     } else {
-      // Create User in sanity
+      // Else Create User in sanity
       const createuser = await createUserOnSanity(currentUserWallet);
       console.log('Created user in sanity: ', createuser);
       // Get all NFTs from user and post to sanity
@@ -45,10 +39,11 @@ export const AppProvider = (props: { children: ReactElement }) => {
   }
 
 
-  // Retrieve all but current User Profile
-  // const getCardData = async (currentUserWallet) => {
-
-  // }
+  // Retrieve all but current User Profile and set state for cards
+  const getCardData = async (currentUserWallet: string) => {
+    const userDataResponse = await getUsersInfo(currentUserWallet);
+    setCardsData(userDataResponse);
+  }
 
 
   // Add User to Array of liked
@@ -65,8 +60,6 @@ export const AppProvider = (props: { children: ReactElement }) => {
   return (
     <AppContext.Provider
       value={{
-        isUserInDb,
-        setIsUserInDb,
         isLoggedIn,
         setIsLoggedIn,
         currentUserWallet,

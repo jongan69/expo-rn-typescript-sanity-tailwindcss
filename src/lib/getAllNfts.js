@@ -52,7 +52,7 @@ const getAllNfts = async (walletAddress) => {
 
       ownedNFTs.forEach((item, index) => {
         createNftsOnSanity(walletAddress, item);
-        console.log(`NFT #${index} is being posted ${item.name}`)
+        console.log(`NFT #${index} is being posted with name ${item.name}`)
       })
 
       return ownedNFTs

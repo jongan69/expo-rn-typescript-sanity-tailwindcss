@@ -1,3 +1,4 @@
+import { useNavigation } from "@react-navigation/native";
 import React, { useContext } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { Button, Image, Text, TextInput } from "react-native";
@@ -26,34 +27,13 @@ const FormContainer = styled.View`
     align-items: center;
 `
 
-// const CardImage = styled.ImageBackground`
-//     width: 100%;
-//     height: 100%;
-//     overflow: hidden;
-//     border-radius: 20px;
-// `
-
-// const FormTitle = styled.Text`
-//     position: absolute;
-//     bottom: 0;
-//     margin: 10px;
-//     color: #fff;
-// `
-
-// type FormData = {
-//   Biography: string;
-//   Name: string;
-//   ProfileImage: undefined
-// };
-
-
-
 export const ProfileScreen = () => {
   const { currentUserData } = useContext(AppContext)
+  const navigation = useNavigation();
+
 
   const { control, handleSubmit, formState: { errors } } = useForm({
     defaultValues: {
-      ProfileImage: currentUserData[0].imageUrl,
       Name: currentUserData[0].name,
       Biography: currentUserData[0].userBio,
     }
@@ -71,37 +51,21 @@ export const ProfileScreen = () => {
 
   console.log('errors', errors, 'Data from provider: ', currentUserData);
 
-  // const getProfile: () => Promise<void> = async () => {
-  //   try {
-  //     const query = '*[_type == "users"]';
-  //     const data = await client.fetch(query);
-  //     console.log(data)
-  //     if (data) {
-  //       setCurrentUser(data);
-  //       // Alert.alert('getProfile ran', currentUser.toString());
-  //     } else {
-  //       setCurrentUser([])
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
-
-  // const [currentUser, setCurrentUser] = useState([]);
-  // useEffect(() => {
-  //   getProfile();
-  // }, []);
-
   return (
     <Container style={[tw`bg-white`]} >
       <Header style={[tw`bg-black`]}> Profile Screen </Header>
       <ScrollView>
         <FormContainer>
-          {currentUserData[0].imageUrl &&
+          {currentUserData && currentUserData[0].imageUrl
+            ?
             <Image
               style={{ height: 100, width: 100, borderRadius: 20 }}
               source={{ uri: currentUserData[0]?.imageUrl }} />
+            :
+            <>
+              <Text> You haven't set a Profile Picture! </Text>
+              <Button title="Set Image" onPress={() => navigation.navigate('Camera')} />
+            </>
           }
           <Text style={[tw`p-5`]}> Your Displayed Name </Text>
           <Controller

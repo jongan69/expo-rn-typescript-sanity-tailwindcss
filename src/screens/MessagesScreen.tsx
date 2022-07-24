@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { Alert } from "react-native";
+import React from "react";
+import { ScrollView } from "react-native-gesture-handler";
 import styled from 'styled-components';
 import tw from 'twrnc';
-import { client } from "../lib/client";
 
 const Container = styled.View`
     display: flex;
@@ -43,9 +42,11 @@ export const MessageScreen = () => {
   // }, []);
 
   return (
-    <Container style={[tw`bg-black`]}>
-      <Header> Messages Screen </Header>
-    </Container>
+    <ScrollView style={[tw`bg-black`]}>
+      <Container style={[tw`bg-black`]}>
+        <Header> Messages Screen </Header>
+      </Container>
+    </ScrollView>
   );
 }
 

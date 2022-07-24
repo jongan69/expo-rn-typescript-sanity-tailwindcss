@@ -6,6 +6,7 @@ import React from 'react';
 import { Platform } from "react-native";
 import { TailwindProvider } from 'tailwind-rn';
 import utilities from '../tailwind.json';
+import CameraMinter from "./components/CameraMinter";
 import AppProvider from "./context/AppContext";
 import { RootScreen } from "./screens/RootScreen";
 import { WelcomeScreen } from './screens/WelcomeScreen';
@@ -40,6 +41,13 @@ export const App = () => {
                 component={RootScreen}
                 options={{ title: "Home", headerShown: false }}
               />
+              <Stack.Group>
+                <Stack.Screen
+                  name="Camera"
+                  component={CameraMinter}
+                  options={{ title: "Camera", headerShown: false }}
+                />
+              </Stack.Group>
             </Stack.Navigator>
           </NavigationContainer>
         </WalletConnectProvider>
