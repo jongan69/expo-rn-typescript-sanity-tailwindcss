@@ -1,6 +1,6 @@
 import { client } from './client'
 
-const getUserInfo = async (req, res) => {
+const checkMatches = async (req, res) => {
   try {
     const query = `
       *[_type == "users" && _id == "${req.body.likedUser}"]{
@@ -24,4 +24,4 @@ const getUserInfo = async (req, res) => {
   }
 }
 
-export default getUserInfo
+export default checkMatches;

@@ -6,6 +6,7 @@ import React from 'react';
 import { Platform } from "react-native";
 import { TailwindProvider } from 'tailwind-rn';
 import utilities from '../tailwind.json';
+import AppProvider from "./context/AppContext";
 import { RootScreen } from "./screens/RootScreen";
 import { WelcomeScreen } from './screens/WelcomeScreen';
 
@@ -17,30 +18,32 @@ export const App = () => {
 
   return (
     <TailwindProvider utilities={utilities}>
-      <WalletConnectProvider
-        redirectUrl={
-          Platform.OS === "web"
-            ? window.location.origin
-            : `${SCHEME_FROM_APP_JSON}://`
-        }
-        storageOptions={{
-          asyncStorage: AsyncStorage,
-        }}>
-        <NavigationContainer>
-          <Stack.Navigator initialRouteName={!connector.connected ? "Welcome" : "Home"}>
-            <Stack.Screen
-              name="Welcome"
-              component={WelcomeScreen}
-              options={{ title: "Welcome", headerShown: false }}
-            />
-            <Stack.Screen
-              name="Root"
-              component={RootScreen}
-              options={{ title: "Home", headerShown: false }}
-            />
-          </Stack.Navigator>
-        </NavigationContainer>
-      </WalletConnectProvider>
+      <AppProvider>
+        <WalletConnectProvider
+          redirectUrl={
+            Platform.OS === "web"
+              ? window.location.origin
+              : `${SCHEME_FROM_APP_JSON}://`
+          }
+          storageOptions={{
+            asyncStorage: AsyncStorage,
+          }}>
+          <NavigationContainer>
+            <Stack.Navigator initialRouteName={!connector.connected ? "Welcome" : "Home"}>
+              <Stack.Screen
+                name="Welcome"
+                component={WelcomeScreen}
+                options={{ title: "Welcome", headerShown: false }}
+              />
+              <Stack.Screen
+                name="Root"
+                component={RootScreen}
+                options={{ title: "Home", headerShown: false }}
+              />
+            </Stack.Navigator>
+          </NavigationContainer>
+        </WalletConnectProvider>
+      </AppProvider>
     </TailwindProvider>
   );
 };

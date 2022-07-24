@@ -1,9 +1,9 @@
 import { client } from './client'
 
-const getUsersInfo = async (req, res) => {
+const getUsersInfo = async (walletAddress) => {
   try {
     const query = `
-      *[_type == "users" && _id == "${req.query.activeAccount}"]{
+      *[_type == "users" && _id == "${walletAddress}"]{
           name,
           walletAddress,
           "imageUrl": profileImage.asset->url
@@ -12,9 +12,12 @@ const getUsersInfo = async (req, res) => {
 
     const sanityResponse = await client.fetch(query)
 
-    res.status(200).send({ message: 'success', data: sanityResponse[0] })
+    console.log('Sanity User Checked')
+    return sanityResponse;
+    // res.status(200).send({ message: 'success', data: sanityResponse[0] })
   } catch (error) {
-    res.status(500).send({ message: 'error', data: error.message })
+    console.log('error', error)
+    // res.status(500).send({ message: 'error', data: error.message })
   }
 }
 

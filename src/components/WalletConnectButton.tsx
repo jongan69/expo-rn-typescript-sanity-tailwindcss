@@ -4,18 +4,16 @@ import { useWalletConnect } from "@walletconnect/react-native-dapp";
 import * as React from "react";
 import { Text, TouchableOpacity } from "react-native";
 import tw from 'twrnc';
-import createUserOnSanity from '../lib/createUser';
-import getAllNfts from '../lib/getAllNfts';
+import { AppContext } from '../context/AppContext';
 
+// const shortenAddress = (address: string) => {
+//   return `${address.slice(0, 6)}...${address.slice(
+//     address.length - 4,
+//     address.length
+//   )}`;
+// };
 
-const shortenAddress = (address: string) => {
-  return `${address.slice(0, 6)}...${address.slice(
-    address.length - 4,
-    address.length
-  )}`;
-};
-
-function Button({ onPress, label }: unknown) {
+const Button = ({ onPress, label }) => {
   return (
     <TouchableOpacity
       onPress={onPress}
@@ -26,6 +24,7 @@ function Button({ onPress, label }: unknown) {
 }
 
 export default function WalletConnectButton() {
+  const { setCurrentUserWallet } = React.useContext(AppContext)
   const connector = useWalletConnect();
   const navigation = useNavigation();
 
@@ -33,11 +32,11 @@ export default function WalletConnectButton() {
     return connector.connect();
   }, [connector]);
 
-
   React.useEffect(() => {
-    if (connector.connected) {
-      createUserOnSanity(connector.accounts[0]);
-      getAllNfts(connector.accounts[0]);
+    if (connector.connected && connector.accounts[0]) {
+      setCurrentUserWallet(connector.accounts[0])
+      // createUserOnSanity(connector.accounts[0]);
+      // getAllNfts(connector.accounts[0]);
     }
   }, [connector])
 
