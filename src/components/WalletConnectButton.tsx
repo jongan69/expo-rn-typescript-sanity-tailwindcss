@@ -33,7 +33,7 @@ export default function WalletConnectButton() {
   }, [connector]);
 
   React.useEffect(() => {
-    if (connector.accounts[0]) {
+    if (connector.connected) {
       setCurrentUserWallet(connector.accounts[0])
     }
   }, [connector])

@@ -3,7 +3,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import WalletConnectProvider, { useWalletConnect } from "@walletconnect/react-native-dapp";
 import React from 'react';
-import { Platform } from "react-native";
+import { LogBox, Platform } from "react-native";
 import { TailwindProvider } from 'tailwind-rn';
 import utilities from '../tailwind.json';
 import CameraComponent from "./components/CameraComponent";
@@ -11,6 +11,7 @@ import AppProvider from "./context/AppContext";
 import { RootScreen } from "./screens/RootScreen";
 import { WelcomeScreen } from './screens/WelcomeScreen';
 
+LogBox.ignoreAllLogs();
 const SCHEME_FROM_APP_JSON = 'demo'
 
 const Stack = createStackNavigator();
