@@ -29,7 +29,7 @@ const FormContainer = styled.View`
 `
 
 export const ProfileScreen = () => {
-  const { currentUserData, currentUserWallet, setCurrentUserData } = useContext(AppContext)
+  const { currentUserData, currentUserWallet } = useContext(AppContext)
   const navigation = useNavigation();
 
 
@@ -42,13 +42,14 @@ export const ProfileScreen = () => {
     }
   });
 
-  const onSubmit = (data) => {
+  const onSubmit = (data: { Name: any; Biography: any; }) => {
     console.log('Updating User Profile with: ', currentUserWallet, data);
     updateProfile(currentUserWallet, data.Name, data.Biography)
     Alert.alert('Updated your name and bio!')
   }
 
-  const onChange = (arg) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const onChange = (arg: { nativeEvent: { text: any; }; }) => {
     return {
       value: arg.nativeEvent.text,
     };

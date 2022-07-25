@@ -13,9 +13,11 @@ export const AppProvider = (props: { children: ReactElement }) => {
   const [currentUserData, setCurrentUserData] = useState([]);
 
   useEffect(() => {
-    console.log('The Current User Wallet was updated!: ', currentUserWallet)
-    setIsLoggedIn(true);
-    checkUserInsanity(currentUserWallet);
+    if (currentUserWallet !== undefined) {
+      console.log('The Current User Wallet was updated!: ', currentUserWallet)
+      setIsLoggedIn(true);
+      checkUserInsanity(currentUserWallet);
+    }
   }, [currentUserWallet])
 
 
@@ -27,7 +29,7 @@ export const AppProvider = (props: { children: ReactElement }) => {
 
 
   // Check if the user is in our database, if not add them and add their Nfts
-  const checkUserInsanity = async (currentUserWallet: string | undefined) => {
+  const checkUserInsanity = async (currentUserWallet: string) => {
     const checkuser = await fetchCurrentUserData(currentUserWallet);
     if (checkuser.length > 0) {
       console.log('found user in sanity: ', checkuser);
@@ -46,7 +48,7 @@ export const AppProvider = (props: { children: ReactElement }) => {
     }
   }
 
-  const updateUser = async (currentUserWallet) => {
+  const updateUser = async (currentUserWallet: string) => {
     const update = await fetchCurrentUserData(currentUserWallet)
     setCurrentUserData(update);
   }
