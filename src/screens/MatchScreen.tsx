@@ -43,7 +43,7 @@ const CardTitle = styled.Text`
 `
 
 
-export const LikedScreen = () => {
+export const MatchScreen = () => {
   // const connector = useWalletConnect();
   // const navigate = Props.navigation.navigate
 
@@ -99,4 +99,4 @@ export const LikedScreen = () => {
   );
 }
 
-export default LikedScreen;
+export default MatchScreen;

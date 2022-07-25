@@ -3,7 +3,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from 'expo-vector-icons';
 import React from "react";
 import Home from '../components/Home';
-import LikedScreen from './LikedScreen';
+import MatchScreen from './MatchScreen';
 import MessageScreen from './MessagesScreen';
 import OwnedNFTsScreen from './OwnedNFTsScreen';
 import ProfileScreen from './ProfileScreen';
@@ -34,7 +34,7 @@ export const RootScreen = () => {
           if (route.name === "Home") {
             iconName = "md-home";
           }
-          else if (route.name === "Liked") {
+          else if (route.name === "Matches") {
             iconName = "md-heart";
           }
 
@@ -60,8 +60,8 @@ export const RootScreen = () => {
         options={{ headerShown: false }}
       />
       <Tab.Screen
-        name="Liked"
-        component={LikedScreen}
+        name="Matches"
+        component={MatchScreen}
         options={{ headerShown: false }}
       />
       <Tab.Screen

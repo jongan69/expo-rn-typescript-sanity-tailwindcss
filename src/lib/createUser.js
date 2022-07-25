@@ -14,7 +14,7 @@ const createUserOnSanity = async (walletAddress) => {
       defaultProfileImage: defaultProfileImage,
     }
 
-    const sanityResponse = await client.createOrReplace(userDoc)
+    const sanityResponse = await client.createIfNotExists(userDoc)
 
     console.log('Successfully Posted User to Sanity!')
     return sanityResponse;

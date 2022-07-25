@@ -6,6 +6,7 @@ import { ScrollView } from "react-native-gesture-handler";
 import styled from 'styled-components';
 import tw from 'twrnc';
 import { AppContext } from "../context/AppContext";
+import updateProfile from '../lib/updateProfile';
 
 const Container = styled.View`
     display: flex;
@@ -28,19 +29,25 @@ const FormContainer = styled.View`
 `
 
 export const ProfileScreen = () => {
-  const { currentUserData } = useContext(AppContext)
+  const { currentUserData, currentUserWallet } = useContext(AppContext)
   const navigation = useNavigation();
+
+  useEffect(() => {
+    const update = fetchCurrentUserData(currentUserWallet)
+    setCurrentUserData(update);
+  }, [])
 
 
   const { control, handleSubmit, formState: { errors } } = useForm({
     defaultValues: {
-      Name: currentUserData[0].name,
-      Biography: currentUserData[0].userBio,
+      Name: '',
+      Biography: '',
     }
   });
 
   const onSubmit = (data) => {
-    console.log(data);
+    console.log('Updating User Profile with: ', currentUserWallet, data);
+    updateProfile(currentUserWallet, data.Name, data.Biography)
   }
 
   const onChange = (arg) => {
@@ -56,11 +63,14 @@ export const ProfileScreen = () => {
       <Header style={[tw`bg-black`]}> Profile Screen </Header>
       <ScrollView>
         <FormContainer>
-          {currentUserData && currentUserData[0].imageUrl
+          {currentUserData && currentUserData[0]?.imageUrl
             ?
-            <Image
-              style={{ height: 100, width: 100, borderRadius: 20 }}
-              source={{ uri: currentUserData[0]?.imageUrl }} />
+            <>
+              <Image
+                style={{ height: 100, width: 100, borderRadius: 20 }}
+                source={{ uri: currentUserData[0]?.imageUrl }} />
+              <Button title="Update Profile Picture" onPress={() => navigation.navigate('Camera')} />
+            </>
             :
             <>
               <Text> You haven't set a Profile Picture! </Text>
@@ -75,11 +85,11 @@ export const ProfileScreen = () => {
             }}
             render={({ field: { onChange, onBlur, value } }) => (
               <TextInput
-                style={[tw`bg-white`, { width: '80%' }]}
+                style={[tw`bg-gray-400`, { width: '80%' }]}
                 onBlur={onBlur}
                 onChangeText={onChange}
                 value={value}
-              // placeholder={currentUserData.name}
+                placeholder={currentUserData[0]?.name}
               />
             )}
             name={"Name"}
@@ -94,17 +104,17 @@ export const ProfileScreen = () => {
             }}
             render={({ field: { onChange, onBlur, value } }) => (
               <TextInput
-                // style={styles.input}
+                style={[tw`bg-gray-400`, { width: '80%' }]}
                 onBlur={onBlur}
                 onChangeText={onChange}
                 value={value}
-                placeholder="Biography"
+                placeholder={currentUserData[0]?.userBio}
               />
             )}
             name="Biography"
           />
         </FormContainer>
-        <Button title="Submit" onPress={handleSubmit(onSubmit)} />
+        <Button title="Update" onPress={handleSubmit(onSubmit)} />
       </ScrollView>
     </Container >
   );

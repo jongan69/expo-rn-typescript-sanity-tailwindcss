@@ -19,6 +19,12 @@ export const AppProvider = (props: { children: ReactElement }) => {
   }, [currentUserWallet])
 
 
+  useEffect(() => {
+    const currentUserDataResponse = fetchCurrentUserData(currentUserWallet);
+    setCurrentUserData(currentUserDataResponse);
+  }, [])
+
+
   // Check if the user is in our database, if not add them and add their Nfts
   const checkUserInsanity = async (currentUserWallet: string | undefined) => {
     const checkuser = await fetchCurrentUserData(currentUserWallet);

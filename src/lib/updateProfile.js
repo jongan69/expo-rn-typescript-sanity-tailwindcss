@@ -3,15 +3,12 @@ import { client } from './client'
 const createUserOnSanity = async (walletAddress, name, userBio) => {
   try {
 
-    const userDoc = {
-      _type: 'users',
-      _id: walletAddress,
+    const sanityResponse = await client.patch(walletAddress).set({
       name: name,
       userBio: userBio
-    }
+    }).commit()
 
-    const sanityResponse = await client.createOrReplace(userDoc)
-    console.log('Successfully Updated User to Sanity!')
+    console.log('Successfully Updated User to Sanity: ', sanityResponse)
     return sanityResponse;
   } catch (error) {
     console.log('error', error)
