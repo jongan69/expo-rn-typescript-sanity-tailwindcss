@@ -1,8 +1,11 @@
 import React, { createContext, ReactElement, useEffect, useState } from "react";
+import checkMatches from "../lib/checkMatches";
 import createUserOnSanity from '../lib/createUser';
 import fetchCurrentUserData from '../lib/fetchCurrentUserData';
 import getAllNfts from '../lib/getAllNfts';
 import getUsersInfo from "../lib/getUsersInfo";
+import saveLike from "../lib/saveLike";
+import saveMatch from "../lib/saveMatch";
 
 export const AppContext = createContext({});
 
@@ -62,9 +65,16 @@ export const AppProvider = (props: { children: ReactElement }) => {
 
 
   // Add User to Array of liked
-  // const handleRightSwipe = async() = {
-
-  // }
+  const handleRightSwipe = async (currentUserWallet, likedUserAddress) => {
+    await saveLike(currentUserWallet, likedUserAddress)
+    console.log(`saving like between ${currentUserWallet} and ${likedUserAddress}:`)
+    const check = await checkMatches(currentUserWallet, likedUserAddress)
+    console.log('Match result: ', check)
+    if (check === true) {
+      saveMatch(currentUserWallet, likedUserAddress)
+      console.log('Match was found and saved')
+    }
+  }
 
 
   // Add User to array of disliked (keep local)
@@ -82,7 +92,8 @@ export const AppProvider = (props: { children: ReactElement }) => {
         currentUserData,
         setCurrentUserData,
         cardsData,
-        setCardsData
+        setCardsData,
+        handleRightSwipe
       }}>
       {props.children}
     </AppContext.Provider>

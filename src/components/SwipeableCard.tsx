@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-expressions */
 import React, { useContext, useEffect, useState } from 'react';
+import { Text } from 'react-native';
 import styled from 'styled-components';
 import tw from 'twrnc';
 import { AppContext } from '../context/AppContext';
@@ -61,7 +62,7 @@ const InfoText = styled.Text`
 `
 
 const SwipeableCard = () => {
-  const { cardsData } = useContext(AppContext)
+  const { cardsData, currentUserWallet, handleRightSwipe } = useContext(AppContext)
   const [users, setUsers] = useState([]);
   useEffect(() => {
     if (cardsData && cardsData.length > 0) {
@@ -73,8 +74,11 @@ const SwipeableCard = () => {
 
   const [lastDirection, setLastDirection] = useState()
 
-  const swiped = (direction: undefined, nameToDelete: string) => {
-    console.log(`removing: ${nameToDelete}`)
+  const swiped = (direction: undefined, userAddress: string) => {
+    console.log(`removing: ${userAddress}`)
+    if (direction === 'right') {
+      handleRightSwipe(currentUserWallet, userAddress)
+    }
     setLastDirection(direction)
   }
 
@@ -93,13 +97,13 @@ const SwipeableCard = () => {
             return (
               <TinCard
                 key={user._id}
-                onSwipe={(dir) => swiped(dir, user.name)}
+                onSwipe={(dir) => swiped(dir, user.walletAddress)}
                 onCardLeftScreen={() => outOfFrame(user.name)}
               >
                 <Card>
                   <CardImage source={{ uri: user.imageUrl }}>
                     <CardTitle>{user.name}</CardTitle>
-                    <InfoText>{user.userBio}</InfoText>
+                    <Text>{user.userBio}</Text>
                   </CardImage>
                 </Card>
               </TinCard>

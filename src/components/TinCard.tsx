@@ -1,3 +1,4 @@
+/* eslint-disable react/display-name */
 import { animated, useSpring } from '@react-spring/native'
 import React from 'react'
 import { Dimensions, PanResponder, View } from 'react-native'

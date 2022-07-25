@@ -11,6 +11,13 @@ const createUserOnSanity = async (walletAddress) => {
       _id: walletAddress,
       name: walletAddress,
       walletAddress: walletAddress,
+      owned: {
+        _type: 'string',
+        asset: {
+          _type: "reference",
+          _ref: walletAddress
+        }
+      },
       profileImage: {
         _type: 'image',
         asset: {

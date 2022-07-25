@@ -3,7 +3,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from 'expo-vector-icons';
 import React from "react";
 import Home from '../components/Home';
-import MatchScreen from './MatchScreen';
+import MatchesScreen from './MatchesScreen';
 import MessageScreen from './MessagesScreen';
 import OwnedNFTsScreen from './OwnedNFTsScreen';
 import ProfileScreen from './ProfileScreen';
@@ -61,7 +61,7 @@ export const RootScreen = () => {
       />
       <Tab.Screen
         name="Matches"
-        component={MatchScreen}
+        component={MatchesScreen}
         options={{ headerShown: false }}
       />
       <Tab.Screen
