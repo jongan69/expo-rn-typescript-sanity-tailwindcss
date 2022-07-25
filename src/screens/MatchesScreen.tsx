@@ -74,7 +74,7 @@ export const MatchesScreen = () => {
 
   useEffect(() => {
     getMatches();
-  }, [currentUserWallet]);
+  }, []);
 
   return (
     <ScrollView style={tw`bg-cyan-700`}>
@@ -82,7 +82,7 @@ export const MatchesScreen = () => {
         <Header style={tw`text-white`}>
           Matches
         </Header>
-        {matches && matches.length > 0 &&
+        {matches !== null && matches.length > 0 &&
           <>
             {
               matches.map((match, index) => {

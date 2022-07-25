@@ -1,8 +1,6 @@
 /* eslint-disable no-unused-expressions */
 import React, { useContext, useEffect, useState } from 'react';
-import { Text } from 'react-native';
 import styled from 'styled-components';
-import tw from 'twrnc';
 import { AppContext } from '../context/AppContext';
 import TinCard from './TinCard';
 
@@ -12,18 +10,12 @@ const Container = styled.View`
     align-items: center;
     justify-content: center;
     width: 100%;
-`
-
-const Header = styled.Text`
-    color: #000;
-    font-size: 30px;
-    margin-bottom: 30px;
-    width: 100%
+    height: 80%;
 `
 
 const CardContainer = styled.View`
-    width: 90%;
-    max-width: 260px;
+    width: 100%;
+    max-width: 80%;
     height: 300px;
 `
 
@@ -31,8 +23,8 @@ const Card = styled.View`
     position: absolute;
     background-color: #fff;
     width: 100%;
-    max-width: 260px;
-    height: 300px;
+    max-width: 500px;
+    height: 500;
     shadow-color: black;
     shadow-opacity: 0.2;
     shadow-radius: 20px;
@@ -49,9 +41,18 @@ const CardImage = styled.ImageBackground`
 
 const CardTitle = styled.Text`
     position: absolute;
+    bottom: 40;
+    margin: 10px;
+    color: #fff;
+`
+
+const CardBio = styled.Text`
+    position: absolute;
     bottom: 0;
     margin: 10px;
     color: #fff;
+    justify-content: center;
+    z-index: 20;
 `
 
 const InfoText = styled.Text`
@@ -88,9 +89,6 @@ const SwipeableCard = () => {
 
   return (
     <Container>
-      <Header style={tw`text-white`}>
-        Match with Web3 friends!
-      </Header>
       <CardContainer>
         <>
           {users.map((user) => {
@@ -102,8 +100,8 @@ const SwipeableCard = () => {
               >
                 <Card>
                   <CardImage source={{ uri: user.imageUrl }}>
+                    <CardBio>{user.userBio}</CardBio>
                     <CardTitle>{user.name}</CardTitle>
-                    <Text>{user.userBio}</Text>
                   </CardImage>
                 </Card>
               </TinCard>
