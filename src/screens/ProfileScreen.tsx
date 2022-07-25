@@ -32,9 +32,6 @@ export const ProfileScreen = () => {
   const { currentUserData, currentUserWallet } = useContext(AppContext)
   const navigation = useNavigation();
 
-
-
-
   const { control, handleSubmit, formState: { errors } } = useForm({
     defaultValues: {
       Name: '',
