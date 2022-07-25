@@ -40,7 +40,8 @@ export default function WalletConnectButton() {
 
 
   const killSession = React.useCallback(() => {
-    navigation.navigate('Welcome')
+    navigation.navigate('Welcome');
+    setCurrentUserWallet(null);
     return connector.killSession();
   }, [connector]);
 
