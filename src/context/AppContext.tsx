@@ -19,20 +19,20 @@ export const AppProvider = (props: { children: ReactElement }) => {
   }, [currentUserWallet])
 
 
-  useEffect(() => {
-    const currentUserDataResponse = fetchCurrentUserData(currentUserWallet);
-    setCurrentUserData(currentUserDataResponse);
-  }, [])
+  // useEffect(() => {
+  //   const currentUserDataResponse = fetchCurrentUserData(currentUserWallet);
+  //   setCurrentUserData(currentUserDataResponse);
+  //   updateUser(currentUserWallet)
+  // }, [])
 
 
   // Check if the user is in our database, if not add them and add their Nfts
   const checkUserInsanity = async (currentUserWallet: string | undefined) => {
     const checkuser = await fetchCurrentUserData(currentUserWallet);
-    if (checkuser) {
+    if (checkuser.length > 0) {
       console.log('found user in sanity: ', checkuser);
       // Fetch all User Data
-      const currentUserDataResponse = await fetchCurrentUserData(currentUserWallet);
-      setCurrentUserData(currentUserDataResponse);
+      setCurrentUserData(checkuser);
       await getCardData(currentUserWallet);
     } else {
       // Else Create User in sanity
@@ -41,7 +41,14 @@ export const AppProvider = (props: { children: ReactElement }) => {
       // Get all NFTs from user and post to sanity
       const updateNfts = await getAllNfts(currentUserWallet);
       console.log('Created Nfts in sanity: ', updateNfts);
+      updateUser(currentUserWallet)
+      await getCardData(currentUserWallet);
     }
+  }
+
+  const updateUser = async (currentUserWallet) => {
+    const update = await fetchCurrentUserData(currentUserWallet)
+    setCurrentUserData(update);
   }
 
 

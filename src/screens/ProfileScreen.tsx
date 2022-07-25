@@ -1,7 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useContext } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { Button, Image, Text, TextInput } from "react-native";
+import { Alert, Button, Image, Text, TextInput } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import styled from 'styled-components';
 import tw from 'twrnc';
@@ -16,7 +16,7 @@ const Container = styled.View`
 `
 
 const Header = styled.Text`
-    color: #FFF;
+    color: #000;
     font-size: 30px;
     margin-bottom: 30px;
     margin-top: 20%
@@ -29,13 +29,10 @@ const FormContainer = styled.View`
 `
 
 export const ProfileScreen = () => {
-  const { currentUserData, currentUserWallet } = useContext(AppContext)
+  const { currentUserData, currentUserWallet, setCurrentUserData } = useContext(AppContext)
   const navigation = useNavigation();
 
-  useEffect(() => {
-    const update = fetchCurrentUserData(currentUserWallet)
-    setCurrentUserData(update);
-  }, [])
+
 
 
   const { control, handleSubmit, formState: { errors } } = useForm({
@@ -48,6 +45,7 @@ export const ProfileScreen = () => {
   const onSubmit = (data) => {
     console.log('Updating User Profile with: ', currentUserWallet, data);
     updateProfile(currentUserWallet, data.Name, data.Biography)
+    Alert.alert('Updated your name and bio!')
   }
 
   const onChange = (arg) => {
@@ -59,11 +57,11 @@ export const ProfileScreen = () => {
   console.log('errors', errors, 'Data from provider: ', currentUserData);
 
   return (
-    <Container style={[tw`bg-white`]} >
-      <Header style={[tw`bg-black`]}> Profile Screen </Header>
+    <Container style={[tw`bg-gray-300`]} >
+      <Header> Profile Screen </Header>
       <ScrollView>
         <FormContainer>
-          {currentUserData && currentUserData[0]?.imageUrl
+          {currentUserData
             ?
             <>
               <Image
